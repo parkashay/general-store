@@ -1,87 +1,68 @@
-<script setup>
-    const products = await useProduct("multiple")
-//     const products = [
-//   {
-//     id: "1",
-//     title: "Lorem Ipsum Dolor Sit Amet",
-//     price: "19.99",
-//     image: "https://via.placeholder.com/150",
-//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-//     rating: { rate: 4.5, count: 20 }
-//   },
-//   {
-//     id: "2",
-//     title: "Consectetur Adipiscing Elit",
-//     price: "29.99",
-//     image: "https://via.placeholder.com/150",
-//     description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     rating: { rate: 4.2, count: 15 }
-//   },
-//   {
-//     id: "3",
-//     title: "Ut Labore Et Dolore",
-//     price: "39.99",
-//     image: "https://via.placeholder.com/150",
-//     description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-//     rating: { rate: 4.8, count: 25 }
-//   },
-//   {
-//     id: "4",
-//     title: "Duis Aute Irure Dolor",
-//     price: "49.99",
-//     image: "https://via.placeholder.com/150",
-//     description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-//     rating: { rate: 4.0, count: 10 }
-//   },
-//   {
-//     id: "5",
-//     title: "Excepteur Sint Occaecat",
-//     price: "59.99",
-//     image: "https://via.placeholder.com/150",
-//     description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//     rating: { rate: 4.6, count: 30 }
-//   },
-//   {
-//     id: "6",
-//     title: "Sed Do Eiusmod Tempor",
-//     price: "69.99",
-//     image: "https://via.placeholder.com/150",
-//     description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     rating: { rate: 4.3, count: 18 }
-//   },
-//   {
-//     id: "7",
-//     title: "Nisi Ut Aliquip Ex Ea Commodo",
-//     price: "79.99",
-//     image: "https://via.placeholder.com/150",
-//     description: "Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-//     rating: { rate: 4.9, count: 35 }
-//   },
-//   {
-//     id: "8",
-//     title: "Duis Aute Irure Dolor",
-//     price: "89.99",
-//     image: "https://via.placeholder.com/150",
-//     description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-//     rating: { rate: 4.1, count: 12 }
-//   }
-// ];
+<script setup lang="ts">
+import { ref } from "vue";
+import type { Product } from "~/utils/types";
+let products: Product[] = await useProduct("multiple");
+const productsList = ref(products);
+
+const sort = ref("default");
+
+const filter = ref<{ category: string[]; rating: number }>({
+  category: [],
+  rating: 0,
+});
+
+watch(sort, () => {
+  if (sort.value == "asc") {
+    productsList.value.sort((a, b) => a.price - b.price);
+  }
+  if (sort.value == "desc") {
+    productsList.value.sort((a, b) => b.price - a.price);
+  }
+});
+
+watch(filter.value, () => {
+  if (filter.value.category.length > 0) {
+    productsList.value = products.filter((product) =>
+      filter.value.category.includes(product.category) && product.rating.rate >= filter.value.rating
+    );
+  }
+  else{
+    productsList.value = products.filter((product) => product.rating.rate >= filter.value.rating)
+  }
+});
 </script>
 
 <template>
-    <h2 v-if="products.length > 0">All Products</h2>
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 place-items-center my-6"
-    >
-      <ProductCard
-        v-for="{ id, title, price, image, description, rating } in products"
-        :key="title"
-        :id="id"
-        :title="title"
-        :price="price"
-        :image="image"
-        :description="description"
-        :rating="rating"
-      />
+  <div v-if="products.length > 0">
+    <h2>All Products</h2>
+    <ProductSort v-model="sort" />
+    <div class="flex gap-3">
+      <div class="hidden lg:block">
+        <ProductFilter v-model="filter" />
+      </div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 place-items-center my-6"
+      >
+        <ProductCard
+          v-for="{
+            id,
+            title,
+            price,
+            image,
+            description,
+            rating,
+          } in productsList"
+          v-model="sort"
+          :key="title"
+          :id="id"
+          :title="title"
+          :price="price"
+          :image="image"
+          :description="description"
+          :rating="rating"
+        />
+      </div>
     </div>
-  </template>
+  </div>
+  <h2 v-else class="my-12">No Products available</h2>
+</template>

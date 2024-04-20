@@ -42,12 +42,7 @@
         {{ description.slice(0, 100) }}...
       </p>
       <span class="block pb-2 font-bold typography-text-lg">${{ price }}</span>
-      <SfButton size="sm">
-        <template #prefix>
-          <SfIconShoppingCart size="sm" />
-        </template>
-        Add to cart
-      </SfButton>
+      
     </div>
   </div>
 </template>
@@ -57,7 +52,6 @@ import {
   SfRating,
   SfCounter,
   SfButton,
-  SfIconShoppingCart,
   SfIconFavorite,
 } from "@storefront-ui/vue";
 defineProps(["id", "title", "image", "description", "rating", "price"]);

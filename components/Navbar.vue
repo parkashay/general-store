@@ -27,34 +27,16 @@
       >
         <span class="hidden lg:flex whitespace-nowrap">Browse products</span>
       </NuxtLink>
-      <form
-        role="search"
-        class="flex flex-[100%] order-last lg:order-3 mt-2 lg:mt-0 pb-2 lg:pb-0"
-        @submit.prevent="search"
-      >
-        <SfInput
-          v-model="inputValue"
-          type="search"
-          class="[&::-webkit-search-cancel-button]:appearance-none"
-          placeholder="Search"
-          wrapper-class="flex-1 h-10 pr-0"
-          size="base"
-        >
-          <template #suffix>
-            <span class="flex items-center">
-              <SfButton
-                variant="tertiary"
-                square
-                aria-label="search"
-                type="submit"
-                class="rounded-l-none hover:bg-transparent active:bg-transparent"
-              >
-                <SfIconSearch />
-              </SfButton>
-            </span>
-          </template>
-        </SfInput>
-      </form>
+
+      <!-- Search Autocomplete -->
+
+       <div class="w-full z-50">
+        <ProductSearch />
+       </div>
+
+      <!-- End Search Autocomplete -->
+
+
       <nav class="flex-1 flex justify-end lg:order-last lg:ml-4">
         <div class="flex flex-row flex-nowrap">
           <SfButton
@@ -84,14 +66,11 @@ import { ref } from "vue";
 import {
   SfButton,
   SfIconShoppingCart,
-  SfIconFavorite,
-  SfIconPerson,
-  SfIconExpandMore,
   SfInput,
   SfIconSearch,
   SfIconMenu,
-  SfLink,
 } from "@storefront-ui/vue";
+import type { Product } from "~/utils/types";
 
 const actionItems = [
   {
@@ -100,23 +79,5 @@ const actionItems = [
     role: "button",
     label: "",
   },
-  {
-    icon: SfIconFavorite,
-    ariaLabel: "Wishlist",
-    role: "button",
-    label: "",
-  },
-  {
-    label: "Log in",
-    icon: SfIconPerson,
-    ariaLabel: "Log in",
-    role: "login",
-  },
 ];
-
-const inputValue = ref("");
-
-const search = () => {
-  alert(`Successfully found 10 results for ${inputValue.value}`);
-};
 </script>

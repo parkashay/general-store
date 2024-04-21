@@ -3,6 +3,12 @@
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 
+## features
+ - dummy checkout flow for typical ecommerce app
+ - product filters based on rating and category
+ - product sorting based on price(asc or desc)
+ - search with autocomplete feature
+
 ## Setup
 
 Make sure to install the dependencies:

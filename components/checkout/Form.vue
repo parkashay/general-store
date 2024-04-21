@@ -1,73 +1,70 @@
 <template>
   <form
-    class="p-4 flex gap-4 flex-wrap text-neutral-900"
+    class="p-4 flex gap-4 flex-wrap text-neutral-900 max-w-[700px]"
     @submit.prevent="onSubmit"
   >
     <h2 class="w-full typography-headline-4 md:typography-headline-3 font-bold">
       Address Details
     </h2>
     <label
-      class="w-full md:w-auto flex-grow flex flex-col gap-0.5 mt-4 md:mt-0"
+      class="w-full basis-1/3 md:w-auto flex-grow flex flex-col gap-0.5 "
     >
       <span class="typography-text-sm font-medium">First Name</span>
-      <SfInput name="firstName" autocomplete="given-name" required />
+      <input
+        class="border border-slate-400 px-2 py-2 rounded-lg"
+        name="firstName"
+        required
+      />
     </label>
-    <label class="w-full md:w-auto flex-grow flex flex-col gap-0.5">
+    <label class="w-full basis-1/3 md:w-auto flex-grow flex flex-col gap-0.5">
       <span class="typography-text-sm font-medium">Last Name</span>
-      <SfInput name="lastName" autocomplete="family-name" required />
+      <input
+        class="border border-slate-400 px-2 py-2 rounded-lg"
+        name="lastName"
+        required
+      />
     </label>
-    <label class="w-full flex flex-col gap-0.5">
+    <label class="w-full basis-1/2 flex flex-col gap-0.5">
       <span class="typography-text-sm font-medium">Phone</span>
-      <SfInput name="phone" type="tel" autocomplete="tel" required />
+      <input
+        class="border border-slate-400 px-2 py-2 rounded-lg"
+        name="phone"
+        required
+      />
     </label>
-    <label class="w-1/2">
+    <label class="basis-1/3">
       <span class="pb-1 text-sm font-medium text-neutral-900 font-body">
         Country
       </span>
-      <SfSelect name="country" placeholder="-- Select --">
-        <template #chevron>
-          <SfIconUnfoldMore
-            class="absolute pointer-events-none top-2 right-4 text-neutral-500"
-          />
-        </template>
-        <option v-for="{ value, label } in options" :key="value" :value="value">
-          {{ label }}
-        </option>
-      </SfSelect>
+     <select name="country" class="px-4 py-2 bg-white border border-black rounded-lg w-full">
+       <option v-for="{label, value} in options" :value="value" > {{ label }} </option>
+     </select>
     </label>
-    <div class="w-full md:w-auto flex-grow flex flex-col gap-0.5">
-      <label>
+   
+      <label class="flex flex-col basis-1/2">
         <span class="typography-text-sm font-medium">State</span>
-        <SfInput
-          name="street"
-          autocomplete="address-line1"
-          class="mt-0.5"
-          required
-          :invalid="!streetIsValid"
-          @blur="streetIsValid = !!$event.target.value"
-          @update:model-value="streetIsValid = !!$event"
-        />
+        <input
+        class="border border-slate-400 px-2 py-2 rounded-lg"
+        name="state"
+        required
+      />
       </label>
-      <div class="flex flex-colr mt-0.5">
-        <strong
-          v-if="!streetIsValid"
-          class="typography-error-sm text-negative-700 font-medium"
-        >
-          Please provide a valid state name
-        </strong>
-      </div>
-    </div>
-    <label class="w-full flex flex-col gap-0.5">
+   
+    <label class="flex flex-col gap-0.5">
       <span class="typography-text-sm font-medium">City</span>
-      <SfInput name="city" autocomplete="address-level2" required />
+      <input
+        class="border border-slate-400 px-2 py-2 rounded-lg"
+        name="city"
+        required
+      />
     </label>
     <label class="w-full flex flex-col gap-0.5 md:w-[120px]">
       <span class="typography-text-sm font-medium">ZIP Code</span>
-      <SfInput
+      <input
+        class="border border-slate-400 px-2 py-2 rounded-lg"
         name="zipCode"
-        placeholder="eg. 12345"
-        autocomplete="postal-code"
         required
+        placeholder="12345"
       />
     </label>
 
@@ -82,7 +79,12 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { SfSelect, SfInput, SfButton, SfIconUnfoldMore } from "@storefront-ui/vue";
+import {
+  SfSelect,
+  SfInput,
+  SfButton,
+  SfIconUnfoldMore,
+} from "@storefront-ui/vue";
 
 // e a list of countries you want to support
 
@@ -101,6 +103,6 @@ const onSubmit = (e: Event) => {
   const formData = new FormData(form);
   const formJSON = Object.fromEntries(formData.entries());
   localStorage.setItem("addressData", JSON.stringify(formJSON));
-  navigateTo('/checkout/payment')
+  navigateTo("/checkout/payment");
 };
 </script>

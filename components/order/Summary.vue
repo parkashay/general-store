@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="my-6">
       <div class="md:shadow-lg md:rounded-md md:border md:border-neutral-100">
         <div class="flex justify-between items-end bg-neutral-100 md:bg-transparent py-2 px-4 md:px-6 md:pt-6 md:pb-4">
           <p class="typography-headline-4 font-bold md:typography-headline-3">Order Summary</p>

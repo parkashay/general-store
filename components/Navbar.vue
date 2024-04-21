@@ -30,54 +30,18 @@
 
       <!-- Search Autocomplete -->
 
-       <div class="w-full z-50">
+      <div class="w-full z-50">
         <ProductSearch />
-       </div>
+      </div>
 
       <!-- End Search Autocomplete -->
 
-
       <nav class="flex-1 flex justify-end lg:order-last lg:ml-4">
-        <div class="flex flex-row flex-nowrap">
-          <SfButton
-            v-for="actionItem in actionItems"
-            :key="actionItem.ariaLabel"
-            class="text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-2 -ml-0.5 rounded-md"
-            :aria-label="actionItem.ariaLabel"
-            variant="tertiary"
-            square
-          >
-            <template #prefix>
-              <Component :is="actionItem.icon" />
-            </template>
-            <span
-              v-if="actionItem.role === 'login'"
-              class="hidden xl:inline-flex whitespace-nowrap"
-              >{{ actionItem.label }}</span
-            >
-          </SfButton>
-        </div>
+        <CartDrawer />
       </nav>
     </div>
   </header>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
-import {
-  SfButton,
-  SfIconShoppingCart,
-  SfInput,
-  SfIconSearch,
-  SfIconMenu,
-} from "@storefront-ui/vue";
-import type { Product } from "~/utils/types";
-
-const actionItems = [
-  {
-    icon: SfIconShoppingCart,
-    ariaLabel: "Cart",
-    role: "button",
-    label: "",
-  },
-];
+import { SfButton, SfIconMenu } from "@storefront-ui/vue";
 </script>

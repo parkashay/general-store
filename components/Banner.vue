@@ -1,5 +1,5 @@
 <template>
-    <div class="relative min-h-[576px]">
+    <div v-if="heroProduct" class="relative min-h-[576px]">
       <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[576px]">
         <div class="flex justify-center md:basis-2/4  md:overflow-hidden">
           <img
@@ -15,7 +15,7 @@
             Product of the day
           </p>
           <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
-            {{ heroProduct.title.slice(0,20) }}
+            {{ heroProduct.title?.slice(0,20) }}
           </h1>
           <p class="typography-text-base md:typography-text-lg">
             {{ heroProduct.description }}
@@ -32,7 +32,7 @@
   import { SfButton } from '@storefront-ui/vue';
 import type { Product } from '~/utils/types';
 
-  const heroProduct: Product = await useProduct("single", Math.ceil(Math.random() * 10).toString());
+  const heroProduct: Product = await useProduct("single", Math.ceil(Math.random() * 10 + 1).toString());
   </script>
   
   

@@ -1,7 +1,9 @@
 <template>
-  <section class="flex flex-col md:flex-row gap-6 justify-center px-3 items-center">
+  <section
+    class="flex flex-col md:flex-row gap-6 justify-center px-3 items-center"
+  >
     <div class="max-w-[400px]">
-        <img :src="image" :alt="title">
+      <img :src="image" :alt="title" />
     </div>
     <div class="md:max-w-[640px] my-12">
       <div
@@ -24,12 +26,6 @@
         {{ description }}
       </div>
       <div class="py-4 mb-4 border-gray-200 border-y">
-        <div
-          class="bg-primary-100 text-primary-700 flex justify-center gap-1.5 py-1.5 typography-text-sm items-center mb-4 rounded-md"
-        >
-          <SfIconShoppingCartCheckout />
-          0 in cart
-        </div>
         <div class="items-start xs:flex">
           <div
             class="flex flex-col items-stretch xs:items-center xs:inline-flex"
@@ -71,23 +67,20 @@
               <strong class="text-neutral-900">{{ max }}</strong> in stock
             </p>
           </div>
-          <SfButton size="lg" class="w-full xs:ml-4">
+          <SfButton
+            @click="
+              handleAddToCart({
+                item: { id, price, title, image },
+                quantity: count,
+              })
+            "
+            size="lg"
+            class="w-full xs:ml-4"
+          >
             <template #prefix>
               <SfIconShoppingCart size="sm" />
             </template>
             Add to cart
-          </SfButton>
-        </div>
-        <div class="flex justify-center mt-4 gap-x-4">
-          <SfButton size="sm" variant="tertiary">
-            <template #prefix>
-              <SfIconCompareArrows size="sm" />
-            </template>
-            Compare
-          </SfButton>
-          <SfButton size="sm" variant="tertiary">
-            <SfIconFavorite size="sm" />
-            Add to list
           </SfButton>
         </div>
       </div>
@@ -135,10 +128,8 @@ import {
   SfLink,
   SfRating,
   SfIconSafetyCheck,
-  SfIconCompareArrows,
   SfIconWarehouse,
   SfIconPackage,
-  SfIconFavorite,
   SfIconSell,
   SfIconShoppingCart,
   SfIconAdd,
@@ -148,7 +139,16 @@ import {
 } from "@storefront-ui/vue";
 import { clamp } from "@storefront-ui/shared";
 import { useCounter } from "@vueuse/core";
+import type { CartItem } from "~/utils/types";
 
+const props = defineProps([
+  "id",
+  "title",
+  "price",
+  "description",
+  "rating",
+  "image",
+]);
 const inputId = useId();
 const min = ref(1);
 const max = ref(999);
@@ -156,10 +156,13 @@ const { count, inc, dec, set } = useCounter(1, {
   min: min.value,
   max: max.value,
 });
+const cartItems = useCart("get");
 function handleOnChange(event: Event) {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = parseFloat(currentValue);
   set(clamp(nextValue, min.value, max.value));
 }
-defineProps(["id", "title", "price", "description", "rating", "image"]);
+const handleAddToCart = (cartItem: CartItem) => {
+  useCart("add", cartItem);
+};
 </script>

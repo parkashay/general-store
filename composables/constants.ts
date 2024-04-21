@@ -21,7 +21,7 @@ export const productsItems = [
     category: "electronics",
     description:
       "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    rating: { rate: 4.2, count: 15 },
+    rating: { rate: 2.2, count: 15 },
   },
   {
     id: "3",
@@ -31,7 +31,7 @@ export const productsItems = [
     description:
       "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     category: "mens-cloting",
-    rating: { rate: 4.8, count: 25 },
+    rating: { rate: 3.8, count: 25 },
   },
   {
     id: "4",
@@ -42,7 +42,7 @@ export const productsItems = [
       "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     category: "mens-cloting",
 
-    rating: { rate: 4.0, count: 10 },
+    rating: { rate: 1.0, count: 10 },
   },
   {
     id: "5",
@@ -53,7 +53,7 @@ export const productsItems = [
       "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "mens-cloting",
 
-    rating: { rate: 4.6, count: 30 },
+    rating: { rate: 3.6, count: 30 },
   },
   {
     id: "6",
@@ -75,7 +75,7 @@ export const productsItems = [
       "Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     category: "mens-cloting",
 
-    rating: { rate: 4.9, count: 35 },
+    rating: { rate: 3.9, count: 35 },
   },
   {
     id: "8",
@@ -86,6 +86,6 @@ export const productsItems = [
       "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     category: "mens-cloting",
 
-    rating: { rate: 4.1, count: 12 },
+    rating: { rate: 5, count: 12 },
   },
 ];

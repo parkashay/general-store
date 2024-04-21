@@ -10,3 +10,8 @@ export type Product = {
         count: number
     }
 }
+
+export type CartItem = {
+    item: Partial<Product>;
+    quantity: number;
+  }
